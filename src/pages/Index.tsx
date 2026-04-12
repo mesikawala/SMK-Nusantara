@@ -1,66 +1,57 @@
 import { Link } from "react-router-dom";
-import { useTheme } from "@/contexts/ThemeContext";
-import { GraduationCap, BookOpen, Users, ClipboardList } from "lucide-react";
+import { Sparkles, Building2 } from "lucide-react";
 
-const features = [
-  { icon: BookOpen, title: "4 Program Keahlian", desc: "RPL, TKJ, DKV, dan Akuntansi" },
-  { icon: Users, title: "Guru Profesional", desc: "Tenaga pendidik bersertifikasi" },
-  { icon: ClipboardList, title: "Pendaftaran Online", desc: "Proses mudah dan cepat" },
-];
+const Index = () => (
+  <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center p-4">
+    <div className="max-w-3xl w-full text-center">
+      <h1 className="font-bold text-4xl md:text-5xl text-slate-900 mb-3" style={{ fontFamily: "'Inter', sans-serif" }}>
+        SMK Nusantara
+      </h1>
+      <p className="text-slate-500 text-lg mb-12">Pilih versi desain website yang ingin dilihat</p>
 
-const Index = () => {
-  const { theme } = useTheme();
-
-  return (
-    <div>
-      {/* Hero */}
-      <section className="relative overflow-hidden">
-        <div className="container mx-auto px-4 py-20 md:py-32 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 bg-muted rounded-full text-sm font-medium text-muted-foreground theme-border">
-            <GraduationCap className="w-4 h-4" />
-            Penerimaan Peserta Didik Baru 2026/2027
-          </div>
-          <h1 className="font-heading font-black text-4xl md:text-6xl lg:text-7xl text-foreground mb-6 leading-tight">
-            Masa Depanmu{" "}
-            <span className="text-primary">Dimulai</span>{" "}
-            <span className={theme === "brutal" ? "text-accent" : "text-primary"}>Di Sini</span>
-          </h1>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
-            SMK Nusantara mencetak lulusan siap kerja dan siap kuliah dengan kurikulum terkini dan fasilitas modern.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              to="/pendaftaran"
-              className="inline-flex items-center justify-center px-8 py-4 bg-primary text-primary-foreground font-heading font-bold text-lg theme-border elevated-shadow rounded-lg hover:opacity-90 transition-all"
-            >
-              Daftar Sekarang
-            </Link>
-            <Link
-              to="/jurusan"
-              className="inline-flex items-center justify-center px-8 py-4 bg-secondary text-secondary-foreground font-heading font-bold text-lg theme-border card-shadow rounded-lg hover:opacity-90 transition-all"
-            >
-              Lihat Jurusan
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Features */}
-      <section className="container mx-auto px-4 py-16">
-        <div className="grid md:grid-cols-3 gap-6">
-          {features.map((f) => (
-            <div key={f.title} className="bg-card p-8 rounded-lg theme-border card-shadow text-center">
-              <div className="inline-flex items-center justify-center w-14 h-14 bg-primary text-primary-foreground rounded-lg theme-border mb-4">
-                <f.icon className="w-7 h-7" />
-              </div>
-              <h3 className="font-heading font-bold text-xl mb-2">{f.title}</h3>
-              <p className="text-muted-foreground">{f.desc}</p>
+      <div className="grid md:grid-cols-2 gap-6">
+        {/* Neo-Brutalism */}
+        <Link to="/brutal" className="group block">
+          <div className="bg-yellow-100 border-4 border-black p-8 text-left transition-transform hover:-translate-y-1"
+            style={{ boxShadow: "6px 6px 0 0 #000" }}>
+            <div className="w-12 h-12 bg-purple-500 border-4 border-black flex items-center justify-center mb-4"
+              style={{ boxShadow: "3px 3px 0 0 #000" }}>
+              <Sparkles className="w-6 h-6 text-white" />
             </div>
-          ))}
-        </div>
-      </section>
+            <h2 className="text-2xl font-black mb-2" style={{ fontFamily: "'Lexend', sans-serif" }}>
+              Versi A: Neo-Brutalism
+            </h2>
+            <p className="text-sm text-gray-700 mb-4">
+              Warna mencolok, border tebal, shadow tajam, font bold — kesan berani dan trendy.
+            </p>
+            <span className="inline-block bg-black text-white px-4 py-2 font-bold text-sm border-2 border-black group-hover:bg-purple-500 transition-colors"
+              style={{ fontFamily: "'Lexend', sans-serif" }}>
+              Lihat Website →
+            </span>
+          </div>
+        </Link>
+
+        {/* Professional */}
+        <Link to="/professional" className="group block">
+          <div className="bg-white border border-slate-200 rounded-xl p-8 text-left shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
+            <div className="w-12 h-12 bg-blue-900 rounded-lg flex items-center justify-center mb-4 shadow-md">
+              <Building2 className="w-6 h-6 text-white" />
+            </div>
+            <h2 className="text-2xl font-bold text-slate-900 mb-2" style={{ fontFamily: "'Inter', sans-serif" }}>
+              Versi B: Profesional Clean
+            </h2>
+            <p className="text-sm text-slate-500 mb-4">
+              Palet biru navy & putih, sudut melengkung, shadow lembut — kesan akademik terpercaya.
+            </p>
+            <span className="inline-block bg-blue-900 text-white px-4 py-2 rounded-lg font-semibold text-sm group-hover:bg-blue-800 transition-colors"
+              style={{ fontFamily: "'Inter', sans-serif" }}>
+              Lihat Website →
+            </span>
+          </div>
+        </Link>
+      </div>
     </div>
-  );
-};
+  </div>
+);
 
 export default Index;
