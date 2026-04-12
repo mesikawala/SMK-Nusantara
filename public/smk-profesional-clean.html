@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SMK Nusantara — Profesional Clean</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    * { font-family: 'Inter', sans-serif; box-sizing: border-box; }
+    body { background: #F8FAFC; color: #1E293B; margin: 0; }
+    .section { display: none; }
+    .section.active { display: block; }
+    .nav-link.active { background: #1E3A5F; color: #fff; }
+    .toast-container { position: fixed; top: 20px; right: 20px; z-index: 1000; display: flex; flex-direction: column; gap: 8px; }
+    .toast { padding: 14px 20px; border-radius: 12px; font-weight: 600; font-size: 14px; max-width: 400px; animation: slideIn 0.3s ease; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); }
+    .toast-success { background: #22C55E; color: #fff; }
+    .toast-error { background: #EF4444; color: #fff; }
+    @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+  </style>
+</head>
+<body>
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- NAVBAR -->
+  <nav class="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 flex items-center justify-between h-16">
+      <a onclick="showSection('home')" class="flex items-center gap-2 font-bold text-xl text-[#1E3A5F] cursor-pointer">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 14l9-5-9-5-9 5 9 5z"/><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>
+        SMK Nusantara
+      </a>
+      <div class="hidden md:flex items-center gap-1" id="desktopNav">
+        <button onclick="showSection('home')" class="nav-link px-4 py-2 rounded-lg font-medium text-slate-600 hover:bg-slate-100 transition-colors" data-section="home">Home</button>
+        <button onclick="showSection('jurusan')" class="nav-link px-4 py-2 rounded-lg font-medium text-slate-600 hover:bg-slate-100 transition-colors" data-section="jurusan">Jurusan</button>
+        <button onclick="showSection('guru')" class="nav-link px-4 py-2 rounded-lg font-medium text-slate-600 hover:bg-slate-100 transition-colors" data-section="guru">Guru</button>
+        <button onclick="showSection('pendaftaran')" class="nav-link px-4 py-2 rounded-lg font-medium text-slate-600 hover:bg-slate-100 transition-colors" data-section="pendaftaran">Pendaftaran</button>
+        <button onclick="showSection('admin')" class="nav-link px-4 py-2 rounded-lg font-medium bg-[#1E3A5F] text-white hover:bg-[#2D4A6F] transition-colors" data-section="admin">Admin</button>
+      </div>
+      <button class="md:hidden p-2 rounded-lg hover:bg-slate-100" onclick="toggleMobile()">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+    <div class="hidden md:hidden border-t border-slate-200 bg-white px-4 pb-4" id="mobileMenu">
+      <button onclick="showSection('home');toggleMobile()" class="block w-full text-left px-4 py-3 rounded-lg font-medium hover:bg-slate-100">Home</button>
+      <button onclick="showSection('jurusan');toggleMobile()" class="block w-full text-left px-4 py-3 rounded-lg font-medium hover:bg-slate-100">Jurusan</button>
+      <button onclick="showSection('guru');toggleMobile()" class="block w-full text-left px-4 py-3 rounded-lg font-medium hover:bg-slate-100">Guru</button>
+      <button onclick="showSection('pendaftaran');toggleMobile()" class="block w-full text-left px-4 py-3 rounded-lg font-medium hover:bg-slate-100">Pendaftaran</button>
+      <button onclick="showSection('admin');toggleMobile()" class="block w-full text-left px-4 py-3 rounded-lg font-medium hover:bg-slate-100">Admin</button>
+    </div>
+  </nav>
+
+  <!-- HOME -->
+  <div id="home" class="section active">
+    <div class="max-w-6xl mx-auto px-4 py-20 md:py-32 text-center">
+      <div class="inline-flex items-center gap-2 px-5 py-2 mb-6 bg-blue-50 border border-blue-200 rounded-full text-sm font-medium text-[#1E3A5F]">
+        🎓 Penerimaan Peserta Didik Baru 2026/2027
+      </div>
+      <h1 class="font-extrabold text-4xl md:text-6xl lg:text-7xl mb-6 leading-tight text-[#1E3A5F]">
+        Masa Depanmu<br/>
+        <span class="text-[#0EA5E9]">Dimulai Di Sini</span>
+      </h1>
+      <p class="text-lg md:text-xl max-w-2xl mx-auto mb-10 text-slate-500">
+        SMK Nusantara mencetak lulusan siap kerja dan siap kuliah dengan kurikulum terkini dan fasilitas modern.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <button onclick="showSection('pendaftaran')" class="px-8 py-4 bg-[#1E3A5F] text-white font-bold text-lg rounded-xl shadow-lg hover:bg-[#2D4A6F] hover:shadow-xl transition-all">
+          Daftar Sekarang
+        </button>
+        <button onclick="showSection('jurusan')" class="px-8 py-4 bg-white text-[#1E3A5F] font-bold text-lg rounded-xl border border-slate-200 shadow-md hover:shadow-lg transition-all">
+          Lihat Jurusan
+        </button>
+      </div>
+    </div>
+    <div class="max-w-6xl mx-auto px-4 pb-20 grid md:grid-cols-3 gap-6">
+      <div class="bg-white p-8 rounded-xl border border-slate-200 shadow-md text-center hover:shadow-lg transition-shadow">
+        <div class="inline-flex items-center justify-center w-14 h-14 bg-blue-50 text-[#1E3A5F] rounded-xl mb-4 text-2xl font-bold">4</div>
+        <h3 class="font-bold text-xl mb-2 text-[#1E3A5F]">Program Keahlian</h3>
+        <p class="text-slate-500">RPL, TKJ, DKV, dan Akuntansi</p>
+      </div>
+      <div class="bg-white p-8 rounded-xl border border-slate-200 shadow-md text-center hover:shadow-lg transition-shadow">
+        <div class="inline-flex items-center justify-center w-14 h-14 bg-blue-50 text-[#1E3A5F] rounded-xl mb-4 text-2xl">👨‍🏫</div>
+        <h3 class="font-bold text-xl mb-2 text-[#1E3A5F]">Guru Profesional</h3>
+        <p class="text-slate-500">Tenaga pendidik bersertifikasi</p>
+      </div>
+      <div class="bg-white p-8 rounded-xl border border-slate-200 shadow-md text-center hover:shadow-lg transition-shadow">
+        <div class="inline-flex items-center justify-center w-14 h-14 bg-blue-50 text-[#1E3A5F] rounded-xl mb-4 text-2xl">📋</div>
+        <h3 class="font-bold text-xl mb-2 text-[#1E3A5F]">Pendaftaran Online</h3>
+        <p class="text-slate-500">Proses mudah dan cepat</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- JURUSAN -->
+  <div id="jurusan" class="section">
+    <div class="max-w-4xl mx-auto px-4 py-16">
+      <h1 class="font-extrabold text-3xl md:text-5xl text-center mb-4 text-[#1E3A5F]">Program Keahlian</h1>
+      <p class="text-center text-slate-500 mb-12">Pilih jurusan yang sesuai dengan minat dan bakatmu</p>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-white p-8 rounded-xl border border-slate-200 shadow-md flex gap-5 hover:shadow-lg transition-shadow">
+          <div class="flex-shrink-0 w-14 h-14 bg-[#1E3A5F] text-white rounded-xl flex items-center justify-center text-2xl">💻</div>
+          <div><h3 class="font-bold text-lg mb-1 text-[#1E3A5F]">RPL</h3><p class="text-sm text-slate-500">Pemrograman, pengembangan web & mobile app.</p></div>
+        </div>
+        <div class="bg-white p-8 rounded-xl border border-slate-200 shadow-md flex gap-5 hover:shadow-lg transition-shadow">
+          <div class="flex-shrink-0 w-14 h-14 bg-[#0EA5E9] text-white rounded-xl flex items-center justify-center text-2xl">🌐</div>
+          <div><h3 class="font-bold text-lg mb-1 text-[#1E3A5F]">TKJ</h3><p class="text-sm text-slate-500">Jaringan komputer, server & keamanan siber.</p></div>
+        </div>
+        <div class="bg-white p-8 rounded-xl border border-slate-200 shadow-md flex gap-5 hover:shadow-lg transition-shadow">
+          <div class="flex-shrink-0 w-14 h-14 bg-[#F59E0B] text-white rounded-xl flex items-center justify-center text-2xl">🎨</div>
+          <div><h3 class="font-bold text-lg mb-1 text-[#1E3A5F]">DKV</h3><p class="text-sm text-slate-500">Desain grafis, branding & multimedia.</p></div>
+        </div>
+        <div class="bg-white p-8 rounded-xl border border-slate-200 shadow-md flex gap-5 hover:shadow-lg transition-shadow">
+          <div class="flex-shrink-0 w-14 h-14 bg-[#22C55E] text-white rounded-xl flex items-center justify-center text-2xl">📊</div>
+          <div><h3 class="font-bold text-lg mb-1 text-[#1E3A5F]">Akuntansi</h3><p class="text-sm text-slate-500">Keuangan, pembukuan & perpajakan.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GURU -->
+  <div id="guru" class="section">
+    <div class="max-w-5xl mx-auto px-4 py-16">
+      <h1 class="font-extrabold text-3xl md:text-5xl text-center mb-4 text-[#1E3A5F]">Tenaga Pendidik</h1>
+      <p class="text-center text-slate-500 mb-12">Guru berpengalaman dan bersertifikasi profesional</p>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-white rounded-xl border border-slate-200 shadow-md text-center p-6 hover:shadow-lg transition-shadow">
+          <div class="w-24 h-24 mx-auto mb-4 bg-blue-50 rounded-full flex items-center justify-center text-4xl">👨‍🏫</div>
+          <h3 class="font-bold text-lg text-[#1E3A5F]">Budi Santoso, S.Pd.</h3>
+          <p class="text-slate-500 text-sm mt-1">Pemrograman Web</p>
+        </div>
+        <div class="bg-white rounded-xl border border-slate-200 shadow-md text-center p-6 hover:shadow-lg transition-shadow">
+          <div class="w-24 h-24 mx-auto mb-4 bg-blue-50 rounded-full flex items-center justify-center text-4xl">👩‍🏫</div>
+          <h3 class="font-bold text-lg text-[#1E3A5F]">Siti Nurhaliza, M.Kom.</h3>
+          <p class="text-slate-500 text-sm mt-1">Jaringan Komputer</p>
+        </div>
+        <div class="bg-white rounded-xl border border-slate-200 shadow-md text-center p-6 hover:shadow-lg transition-shadow">
+          <div class="w-24 h-24 mx-auto mb-4 bg-blue-50 rounded-full flex items-center justify-center text-4xl">👨‍🎨</div>
+          <h3 class="font-bold text-lg text-[#1E3A5F]">Ahmad Fauzi, S.Ds.</h3>
+          <p class="text-slate-500 text-sm mt-1">Desain Grafis</p>
+        </div>
+        <div class="bg-white rounded-xl border border-slate-200 shadow-md text-center p-6 hover:shadow-lg transition-shadow">
+          <div class="w-24 h-24 mx-auto mb-4 bg-blue-50 rounded-full flex items-center justify-center text-4xl">👩‍💼</div>
+          <h3 class="font-bold text-lg text-[#1E3A5F]">Dewi Lestari, S.E.</h3>
+          <p class="text-slate-500 text-sm mt-1">Akuntansi Dasar</p>
+        </div>
+        <div class="bg-white rounded-xl border border-slate-200 shadow-md text-center p-6 hover:shadow-lg transition-shadow">
+          <div class="w-24 h-24 mx-auto mb-4 bg-blue-50 rounded-full flex items-center justify-center text-4xl">👨‍💻</div>
+          <h3 class="font-bold text-lg text-[#1E3A5F]">Rudi Hermawan, S.Kom.</h3>
+          <p class="text-slate-500 text-sm mt-1">Basis Data</p>
+        </div>
+        <div class="bg-white rounded-xl border border-slate-200 shadow-md text-center p-6 hover:shadow-lg transition-shadow">
+          <div class="w-24 h-24 mx-auto mb-4 bg-blue-50 rounded-full flex items-center justify-center text-4xl">👩‍🏫</div>
+          <h3 class="font-bold text-lg text-[#1E3A5F]">Maya Putri, M.Pd.</h3>
+          <p class="text-slate-500 text-sm mt-1">Matematika</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PENDAFTARAN -->
+  <div id="pendaftaran" class="section">
+    <div class="max-w-2xl mx-auto px-4 py-16">
+      <h1 class="font-extrabold text-3xl md:text-5xl text-center mb-4 text-[#1E3A5F]">Formulir Pendaftaran</h1>
+      <p class="text-center text-slate-500 mb-10">Isi data diri untuk mendaftar sebagai calon peserta didik baru</p>
+      <form id="regForm" class="bg-white p-8 rounded-2xl border border-slate-200 shadow-lg space-y-5" onsubmit="handleRegister(event)">
+        <div>
+          <label class="block font-semibold mb-2 text-[#1E3A5F]">Nama Lengkap</label>
+          <input id="fNama" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0EA5E9] focus:border-transparent transition" placeholder="Masukkan nama lengkap" required />
+        </div>
+        <div>
+          <label class="block font-semibold mb-2 text-[#1E3A5F]">NISN</label>
+          <input id="fNisn" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0EA5E9] focus:border-transparent transition" placeholder="Masukkan NISN" required />
+        </div>
+        <div>
+          <label class="block font-semibold mb-2 text-[#1E3A5F]">Asal Sekolah</label>
+          <input id="fSekolah" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0EA5E9] focus:border-transparent transition" placeholder="Masukkan asal sekolah" required />
+        </div>
+        <div>
+          <label class="block font-semibold mb-2 text-[#1E3A5F]">Email</label>
+          <input id="fEmail" type="email" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0EA5E9] focus:border-transparent transition" placeholder="email@contoh.com" required />
+        </div>
+        <div>
+          <label class="block font-semibold mb-2 text-[#1E3A5F]">Pilihan Jurusan</label>
+          <select id="fJurusan" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0EA5E9] focus:border-transparent transition" required>
+            <option value="">-- Pilih Jurusan --</option>
+            <option>RPL</option><option>TKJ</option><option>DKV</option><option>Akuntansi</option>
+          </select>
+        </div>
+        <button type="submit" class="w-full py-4 bg-[#1E3A5F] text-white font-bold text-lg rounded-xl shadow-lg hover:bg-[#2D4A6F] hover:shadow-xl transition-all">
+          Kirim Pendaftaran
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ADMIN -->
+  <div id="admin" class="section">
+    <div class="max-w-6xl mx-auto px-4 py-16">
+      <h1 class="font-extrabold text-3xl md:text-5xl text-center mb-4 text-[#1E3A5F]">Dashboard Admin</h1>
+      <p class="text-center text-slate-500 mb-10">Kelola data pendaftar calon peserta didik baru</p>
+      <div id="adminEmpty" class="bg-white p-12 rounded-2xl border border-slate-200 shadow-md text-center">
+        <p class="text-slate-500 text-lg">Belum ada pendaftar. Data akan muncul setelah ada yang mendaftar.</p>
+      </div>
+      <div id="adminTable" class="hidden bg-white rounded-2xl border border-slate-200 shadow-lg overflow-x-auto">
+        <table class="w-full text-left">
+          <thead>
+            <tr class="border-b border-slate-200 bg-slate-50">
+              <th class="px-4 py-3 font-bold text-sm text-[#1E3A5F]">Nama</th>
+              <th class="px-4 py-3 font-bold text-sm text-[#1E3A5F]">NISN</th>
+              <th class="px-4 py-3 font-bold text-sm text-[#1E3A5F] hidden md:table-cell">Asal Sekolah</th>
+              <th class="px-4 py-3 font-bold text-sm text-[#1E3A5F] hidden sm:table-cell">Email</th>
+              <th class="px-4 py-3 font-bold text-sm text-[#1E3A5F]">Jurusan</th>
+              <th class="px-4 py-3 font-bold text-sm text-[#1E3A5F]">Status</th>
+              <th class="px-4 py-3 font-bold text-sm text-[#1E3A5F]">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="adminBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-[#1E3A5F] text-white mt-12">
+    <div class="max-w-6xl mx-auto px-4 py-8 text-center">
+      <p class="font-bold text-lg">SMK Nusantara</p>
+      <p class="text-sm mt-1 text-blue-200">© 2026 — Versi Profesional Clean</p>
+    </div>
+  </footer>
+
+  <script>
+    let registrants = [];
+
+    function toggleMobile() {
+      document.getElementById('mobileMenu').classList.toggle('hidden');
+    }
+
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.querySelectorAll('.nav-link').forEach(l => {
+        l.classList.remove('active');
+        if (l.dataset.section === id) l.classList.add('active');
+      });
+      if (id === 'admin') renderAdmin();
+      window.scrollTo(0, 0);
+    }
+
+    function showToast(msg, type) {
+      const container = document.getElementById('toastContainer');
+      const t = document.createElement('div');
+      t.className = `toast toast-${type}`;
+      t.textContent = msg;
+      container.appendChild(t);
+      setTimeout(() => t.remove(), 4000);
+    }
+
+    function handleRegister(e) {
+      e.preventDefault();
+      const data = {
+        id: Date.now(),
+        nama: document.getElementById('fNama').value,
+        nisn: document.getElementById('fNisn').value,
+        sekolah: document.getElementById('fSekolah').value,
+        email: document.getElementById('fEmail').value,
+        jurusan: document.getElementById('fJurusan').value,
+        status: 'pending'
+      };
+      registrants.push(data);
+      document.getElementById('regForm').reset();
+      showToast('Pendaftaran berhasil dikirim!', 'success');
+    }
+
+    function renderAdmin() {
+      const empty = document.getElementById('adminEmpty');
+      const table = document.getElementById('adminTable');
+      const body = document.getElementById('adminBody');
+      if (registrants.length === 0) {
+        empty.classList.remove('hidden');
+        table.classList.add('hidden');
+        return;
+      }
+      empty.classList.add('hidden');
+      table.classList.remove('hidden');
+      body.innerHTML = registrants.map(r => `
+        <tr class="border-b border-slate-200">
+          <td class="px-4 py-3 font-medium">${r.nama}</td>
+          <td class="px-4 py-3">${r.nisn}</td>
+          <td class="px-4 py-3 hidden md:table-cell">${r.sekolah}</td>
+          <td class="px-4 py-3 hidden sm:table-cell">${r.email}</td>
+          <td class="px-4 py-3">${r.jurusan}</td>
+          <td class="px-4 py-3">${statusBadge(r.status)}</td>
+          <td class="px-4 py-3">${r.status === 'pending' ? `
+            <div class="flex gap-2">
+              <button onclick="accRegistrant(${r.id})" class="px-3 py-1.5 bg-[#22C55E] text-white font-semibold rounded-lg hover:bg-green-600 transition text-sm">ACC</button>
+              <button onclick="rejectRegistrant(${r.id})" class="px-3 py-1.5 bg-[#EF4444] text-white font-semibold rounded-lg hover:bg-red-600 transition text-sm">Tolak</button>
+            </div>
+          ` : '<span class="text-slate-400 text-sm">Selesai</span>'}</td>
+        </tr>
+      `).join('');
+    }
+
+    function statusBadge(s) {
+      if (s === 'accepted') return '<span class="px-3 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full">Diterima</span>';
+      if (s === 'rejected') return '<span class="px-3 py-1 bg-red-100 text-red-700 text-xs font-semibold rounded-full">Ditolak</span>';
+      return '<span class="px-3 py-1 bg-amber-100 text-amber-700 text-xs font-semibold rounded-full">Pending</span>';
+    }
+
+    function accRegistrant(id) {
+      const r = registrants.find(x => x.id === id);
+      if (r) { r.status = 'accepted'; renderAdmin(); showToast(`Email Berhasil Dikirim ke ${r.email}: Selamat Anda Diterima di SMK!`, 'success'); }
+    }
+
+    function rejectRegistrant(id) {
+      const r = registrants.find(x => x.id === id);
+      if (r) { r.status = 'rejected'; renderAdmin(); showToast(`Email Berhasil Dikirim ke ${r.email}: Maaf, Anda Belum Berhasil.`, 'error'); }
+    }
+
+    showSection('home');
+  </script>
+</body>
+</html>
