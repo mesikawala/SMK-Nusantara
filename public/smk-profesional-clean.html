@@ -291,6 +291,22 @@
         </div>
       </div>
     </div>
+
+    <!-- ===== Ekstrakurikuler ===== -->
+    <div class="max-w-6xl mx-auto px-4 py-16">
+      <h2 class="font-extrabold text-2xl md:text-3xl text-center text-brand-800 mb-4">Ekstrakurikuler</h2>
+      <p class="text-center text-slate-500 mb-10">Kembangkan bakat dan minatmu di luar jam pelajaran</p>
+      <div id="eskulContainer" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </div>
+
+    <!-- ===== Galeri Foto ===== -->
+    <div class="bg-white">
+      <div class="max-w-6xl mx-auto px-4 py-16">
+        <h2 class="font-extrabold text-2xl md:text-3xl text-center text-brand-800 mb-4">Galeri Kegiatan</h2>
+        <p class="text-center text-slate-500 mb-10">Dokumentasi kegiatan dan momen berharga di SMK Nusantara</p>
+        <div id="galeriContainer" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      </div>
+    </div>
   </div>
 
 
@@ -390,6 +406,8 @@
         <button onclick="showAdminTab('konten')"       class="admin-tab px-5 py-3 font-medium text-slate-600 hover:text-brand-700 transition" data-tab="konten">✏️ Konten Home</button>
         <button onclick="showAdminTab('editGuru')"     class="admin-tab px-5 py-3 font-medium text-slate-600 hover:text-brand-700 transition" data-tab="editGuru">👨‍🏫 Guru</button>
         <button onclick="showAdminTab('editJurusan')"  class="admin-tab px-5 py-3 font-medium text-slate-600 hover:text-brand-700 transition" data-tab="editJurusan">📚 Jurusan</button>
+        <button onclick="showAdminTab('editEskul')"    class="admin-tab px-5 py-3 font-medium text-slate-600 hover:text-brand-700 transition" data-tab="editEskul">⚽ Eskul</button>
+        <button onclick="showAdminTab('editGaleri')"   class="admin-tab px-5 py-3 font-medium text-slate-600 hover:text-brand-700 transition" data-tab="editGaleri">🖼️ Galeri</button>
       </div>
 
       <!-- ===== Tab 1: Daftar Pendaftar ===== -->
@@ -511,6 +529,28 @@
         </div>
         <!-- List jurusan di-render oleh renderAdminJurusan() -->
         <div id="adminJurusanList" class="space-y-3"></div>
+      </div>
+
+      <!-- ===== Tab 5: Kelola Eskul ===== -->
+      <div id="tab-editEskul" class="admin-tab-content hidden">
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="font-bold text-lg text-brand-800">Daftar Ekstrakurikuler</h3>
+          <button onclick="openEskulModal()" class="px-4 py-2 bg-brand-700 text-white font-semibold rounded-lg hover:bg-brand-600 transition text-sm">
+            + Tambah Eskul
+          </button>
+        </div>
+        <div id="adminEskulList" class="space-y-3"></div>
+      </div>
+
+      <!-- ===== Tab 6: Kelola Galeri ===== -->
+      <div id="tab-editGaleri" class="admin-tab-content hidden">
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="font-bold text-lg text-brand-800">Galeri Foto</h3>
+          <button onclick="openGaleriModal()" class="px-4 py-2 bg-brand-700 text-white font-semibold rounded-lg hover:bg-brand-600 transition text-sm">
+            + Tambah Foto
+          </button>
+        </div>
+        <div id="adminGaleriList" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
       </div>
 
     </div>
@@ -650,21 +690,42 @@
       { id: 4, nama: 'Akuntansi', deskripsi: 'Keuangan, pembukuan & perpajakan.',            icon: '📊', color: 'bg-teal-500' },
     ];
 
+    const DEFAULT_ESKUL = [
+      { id: 1, nama: 'Pramuka',       deskripsi: 'Kegiatan kepanduan untuk membangun karakter dan jiwa kepemimpinan.',    icon: '⛺', jadwal: 'Sabtu, 08.00 - 11.00', pembina: 'Pak Hendra' },
+      { id: 2, nama: 'Futsal',        deskripsi: 'Latihan futsal rutin dan persiapan turnamen antar sekolah.',            icon: '⚽', jadwal: 'Rabu, 15.00 - 17.00',  pembina: 'Pak Roni' },
+      { id: 3, nama: 'Robotik',       deskripsi: 'Belajar merakit dan memprogram robot untuk kompetisi nasional.',        icon: '🤖', jadwal: 'Kamis, 15.00 - 17.00', pembina: 'Bu Siti' },
+      { id: 4, nama: 'Seni Tari',     deskripsi: 'Melestarikan tarian tradisional dan kreasi modern.',                     icon: '💃', jadwal: 'Selasa, 15.00 - 17.00', pembina: 'Bu Maya' },
+      { id: 5, nama: 'English Club',  deskripsi: 'Meningkatkan kemampuan bahasa Inggris melalui debat dan presentasi.',   icon: '🌍', jadwal: 'Senin, 15.00 - 16.30', pembina: 'Pak David' },
+      { id: 6, nama: 'PMR',           deskripsi: 'Palang Merah Remaja — pelatihan P3K dan bakti sosial.',                 icon: '🏥', jadwal: 'Jumat, 14.00 - 16.00', pembina: 'Bu Dewi' },
+    ];
+
+    const DEFAULT_GALERI = [
+      { id: 1, judul: 'Upacara Bendera',       foto: '', keterangan: 'Upacara bendera setiap Senin pagi di lapangan sekolah.' },
+      { id: 2, judul: 'Praktikum Lab Komputer', foto: '', keterangan: 'Siswa RPL dan TKJ saat praktikum di lab komputer.' },
+      { id: 3, judul: 'Lomba LKS Tingkat Kota', foto: '', keterangan: 'Tim SMK Nusantara meraih juara di LKS kota.' },
+      { id: 4, judul: 'Pentas Seni Tahunan',    foto: '', keterangan: 'Penampilan seni tari dan musik di acara pentas seni.' },
+      { id: 5, judul: 'Study Tour',             foto: '', keterangan: 'Kunjungan industri ke perusahaan teknologi.' },
+      { id: 6, judul: 'Class Meeting',           foto: '', keterangan: 'Pertandingan antar kelas di akhir semester.' },
+    ];
+
 
     // ==============================================================
     // 2. LOAD & SAVE — localStorage
     //    Data tersimpan di browser, tetap ada setelah refresh
-    //    Key: smk_guru, smk_jurusan, smk_registrants, smk_content
     // ==============================================================
 
     let guruData     = JSON.parse(localStorage.getItem('smk_guru')        || 'null') || structuredClone(DEFAULT_GURU);
     let jurusanData  = JSON.parse(localStorage.getItem('smk_jurusan')     || 'null') || structuredClone(DEFAULT_JURUSAN);
+    let eskulData    = JSON.parse(localStorage.getItem('smk_eskul')       || 'null') || structuredClone(DEFAULT_ESKUL);
+    let galeriData   = JSON.parse(localStorage.getItem('smk_galeri')      || 'null') || structuredClone(DEFAULT_GALERI);
     let registrants  = JSON.parse(localStorage.getItem('smk_registrants') || '[]');
     let siteContent  = JSON.parse(localStorage.getItem('smk_content')     || 'null') || {};
 
     function saveAllData() {
       localStorage.setItem('smk_guru',        JSON.stringify(guruData));
       localStorage.setItem('smk_jurusan',     JSON.stringify(jurusanData));
+      localStorage.setItem('smk_eskul',       JSON.stringify(eskulData));
+      localStorage.setItem('smk_galeri',      JSON.stringify(galeriData));
       localStorage.setItem('smk_registrants', JSON.stringify(registrants));
       localStorage.setItem('smk_content',     JSON.stringify(siteContent));
     }
@@ -696,6 +757,7 @@
       if (sectionId === 'admin')  { renderRegistrantsTable(); loadAdminForms(); }
       if (sectionId === 'guru')   renderGuru();
       if (sectionId === 'jurusan') renderJurusan();
+      if (sectionId === 'home')   { renderEskul(); renderGaleri(); }
 
       window.scrollTo(0, 0);
     }
@@ -713,6 +775,8 @@
       // Render data di tab tersebut
       if (tabName === 'editGuru')    renderAdminGuru();
       if (tabName === 'editJurusan') renderAdminJurusan();
+      if (tabName === 'editEskul')   renderAdminEskul();
+      if (tabName === 'editGaleri')  renderAdminGaleri();
     }
 
 
@@ -1256,6 +1320,194 @@
     }
 
 
+    // ----- 8E. Tab Kelola Eskul -----
+
+    /** Render daftar eskul di halaman Home */
+    function renderEskul() {
+      const container = document.getElementById('eskulContainer');
+      container.innerHTML = eskulData.map(e => `
+        <div class="bg-white p-6 rounded-xl border border-green-100 shadow-md hover:shadow-lg transition">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-12 h-12 bg-brand-100 text-brand-700 rounded-xl flex items-center justify-center text-2xl">${e.icon}</div>
+            <div>
+              <h3 class="font-bold text-lg text-brand-800">${e.nama}</h3>
+              <p class="text-xs text-slate-400">${e.jadwal}</p>
+            </div>
+          </div>
+          <p class="text-sm text-slate-500 mb-2">${e.deskripsi}</p>
+          <p class="text-xs text-brand-600 font-medium">Pembina: ${e.pembina}</p>
+        </div>
+      `).join('');
+    }
+
+    /** Render daftar eskul di admin */
+    function renderAdminEskul() {
+      const list = document.getElementById('adminEskulList');
+      list.innerHTML = eskulData.map(e => `
+        <div class="bg-white p-4 rounded-xl border border-green-100 shadow-sm flex items-center gap-4">
+          <div class="w-12 h-12 bg-brand-100 text-brand-700 rounded-xl flex items-center justify-center text-xl flex-shrink-0">${e.icon}</div>
+          <div class="flex-1 min-w-0">
+            <p class="font-bold text-brand-800">${e.nama}</p>
+            <p class="text-sm text-slate-500">${e.jadwal} — ${e.pembina}</p>
+          </div>
+          <div class="flex gap-2 flex-shrink-0">
+            <button onclick="openEskulModal(${e.id})" class="px-3 py-1.5 bg-brand-100 text-brand-700 font-semibold rounded-lg hover:bg-brand-200 transition text-sm">Edit</button>
+            <button onclick="deleteEskul(${e.id})" class="px-3 py-1.5 bg-red-100 text-red-600 font-semibold rounded-lg hover:bg-red-200 transition text-sm">Hapus</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openEskulModal(id) {
+      const e = id ? eskulData.find(x => x.id === id) : null;
+      const isEdit = !!e;
+      document.getElementById('modalContainer').innerHTML = `
+        <div class="modal-overlay" onclick="if(event.target === this) closeModal()">
+          <div class="modal-content">
+            <h3 class="font-bold text-xl text-brand-800 mb-4">${isEdit ? 'Edit' : 'Tambah'} Eskul</h3>
+            <div class="space-y-4">
+              <div><label class="block font-semibold text-sm mb-1">Nama Eskul</label><input id="eNama" value="${e?.nama||''}" class="w-full px-3 py-2 border border-green-200 rounded-lg" /></div>
+              <div><label class="block font-semibold text-sm mb-1">Deskripsi</label><textarea id="eDesc" rows="2" class="w-full px-3 py-2 border border-green-200 rounded-lg">${e?.deskripsi||''}</textarea></div>
+              <div><label class="block font-semibold text-sm mb-1">Icon (emoji)</label><input id="eIcon" value="${e?.icon||'🏆'}" class="w-full px-3 py-2 border border-green-200 rounded-lg" /></div>
+              <div><label class="block font-semibold text-sm mb-1">Jadwal</label><input id="eJadwal" value="${e?.jadwal||''}" placeholder="Contoh: Rabu, 15.00 - 17.00" class="w-full px-3 py-2 border border-green-200 rounded-lg" /></div>
+              <div><label class="block font-semibold text-sm mb-1">Pembina</label><input id="ePembina" value="${e?.pembina||''}" class="w-full px-3 py-2 border border-green-200 rounded-lg" /></div>
+              <div class="flex gap-3 pt-2">
+                <button onclick="saveEskul(${id||0})" class="px-6 py-2 bg-brand-700 text-white font-semibold rounded-lg hover:bg-brand-600">Simpan</button>
+                <button onclick="closeModal()" class="px-6 py-2 bg-slate-200 text-slate-700 font-semibold rounded-lg hover:bg-slate-300">Batal</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function saveEskul(id) {
+      const d = {
+        nama:      document.getElementById('eNama').value,
+        deskripsi: document.getElementById('eDesc').value,
+        icon:      document.getElementById('eIcon').value,
+        jadwal:    document.getElementById('eJadwal').value,
+        pembina:   document.getElementById('ePembina').value,
+      };
+      if (id) {
+        const idx = eskulData.findIndex(x => x.id === id);
+        if (idx > -1) eskulData[idx] = { ...eskulData[idx], ...d };
+      } else {
+        eskulData.push({ id: Date.now(), ...d });
+      }
+      saveAllData(); closeModal(); renderAdminEskul(); renderEskul();
+      showToast('Data eskul berhasil disimpan!', 'success');
+    }
+
+    function deleteEskul(id) {
+      if (!confirm('Yakin ingin menghapus eskul ini?')) return;
+      eskulData = eskulData.filter(x => x.id !== id);
+      saveAllData(); renderAdminEskul(); renderEskul();
+      showToast('Eskul berhasil dihapus.', 'info');
+    }
+
+
+    // ----- 8F. Tab Kelola Galeri -----
+
+    /** Render galeri foto di halaman Home */
+    function renderGaleri() {
+      const container = document.getElementById('galeriContainer');
+      container.innerHTML = galeriData.map(g => `
+        <div class="group relative rounded-xl overflow-hidden shadow-md hover:shadow-lg transition cursor-pointer">
+          ${g.foto
+            ? `<img src="${g.foto}" alt="${g.judul}" class="w-full h-52 object-cover" />`
+            : `<div class="w-full h-52 bg-gradient-to-br from-brand-100 to-brand-200 flex items-center justify-center text-4xl text-brand-400">📷</div>`
+          }
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+            <div>
+              <h4 class="text-white font-bold text-sm">${g.judul}</h4>
+              <p class="text-white/80 text-xs mt-1">${g.keterangan}</p>
+            </div>
+          </div>
+          <div class="p-3 bg-white">
+            <h4 class="font-semibold text-sm text-brand-800">${g.judul}</h4>
+            <p class="text-xs text-slate-400 mt-0.5">${g.keterangan}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    /** Render daftar galeri di admin */
+    function renderAdminGaleri() {
+      const list = document.getElementById('adminGaleriList');
+      list.innerHTML = galeriData.map(g => `
+        <div class="bg-white rounded-xl border border-green-100 shadow-sm overflow-hidden">
+          ${g.foto
+            ? `<img src="${g.foto}" alt="${g.judul}" class="w-full h-36 object-cover" />`
+            : `<div class="w-full h-36 bg-gradient-to-br from-brand-100 to-brand-200 flex items-center justify-center text-3xl text-brand-400">📷</div>`
+          }
+          <div class="p-3">
+            <p class="font-bold text-sm text-brand-800 truncate">${g.judul}</p>
+            <div class="flex gap-2 mt-2">
+              <button onclick="openGaleriModal(${g.id})" class="px-3 py-1 bg-brand-100 text-brand-700 font-semibold rounded-lg hover:bg-brand-200 transition text-xs">Edit</button>
+              <button onclick="deleteGaleri(${g.id})" class="px-3 py-1 bg-red-100 text-red-600 font-semibold rounded-lg hover:bg-red-200 transition text-xs">Hapus</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openGaleriModal(id) {
+      const g = id ? galeriData.find(x => x.id === id) : null;
+      const isEdit = !!g;
+      document.getElementById('modalContainer').innerHTML = `
+        <div class="modal-overlay" onclick="if(event.target === this) closeModal()">
+          <div class="modal-content">
+            <h3 class="font-bold text-xl text-brand-800 mb-4">${isEdit ? 'Edit' : 'Tambah'} Foto Galeri</h3>
+            <div class="space-y-4">
+              <div><label class="block font-semibold text-sm mb-1">Judul</label><input id="gJudul" value="${g?.judul||''}" class="w-full px-3 py-2 border border-green-200 rounded-lg" /></div>
+              <div><label class="block font-semibold text-sm mb-1">Keterangan</label><textarea id="gKet" rows="2" class="w-full px-3 py-2 border border-green-200 rounded-lg">${g?.keterangan||''}</textarea></div>
+              <div><label class="block font-semibold text-sm mb-1">Upload Foto</label><input type="file" accept="image/*" id="gFoto" class="w-full text-sm" /></div>
+              <div class="flex gap-3 pt-2">
+                <button onclick="saveGaleri(${id||0})" class="px-6 py-2 bg-brand-700 text-white font-semibold rounded-lg hover:bg-brand-600">Simpan</button>
+                <button onclick="closeModal()" class="px-6 py-2 bg-slate-200 text-slate-700 font-semibold rounded-lg hover:bg-slate-300">Batal</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function saveGaleri(id) {
+      const formData = {
+        judul:      document.getElementById('gJudul').value,
+        keterangan: document.getElementById('gKet').value,
+      };
+      const fileInput = document.getElementById('gFoto');
+
+      function finish(fotoUrl) {
+        if (id) {
+          const idx = galeriData.findIndex(x => x.id === id);
+          if (idx > -1) { galeriData[idx] = { ...galeriData[idx], ...formData }; if (fotoUrl) galeriData[idx].foto = fotoUrl; }
+        } else {
+          galeriData.push({ id: Date.now(), ...formData, foto: fotoUrl || '' });
+        }
+        saveAllData(); closeModal(); renderAdminGaleri(); renderGaleri();
+        showToast('Foto galeri berhasil disimpan!', 'success');
+      }
+
+      if (fileInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = e => finish(e.target.result);
+        reader.readAsDataURL(fileInput.files[0]);
+      } else {
+        finish(null);
+      }
+    }
+
+    function deleteGaleri(id) {
+      if (!confirm('Yakin ingin menghapus foto ini?')) return;
+      galeriData = galeriData.filter(x => x.id !== id);
+      saveAllData(); renderAdminGaleri(); renderGaleri();
+      showToast('Foto berhasil dihapus.', 'info');
+    }
+
+
     // ==============================================================
     // 9. INIT — Jalankan saat halaman pertama kali dibuka
     // ==============================================================
@@ -1263,6 +1515,8 @@
     applySavedContent();   // Terapkan konten yang sudah diedit
     renderGuru();          // Render halaman guru
     renderJurusan();       // Render halaman jurusan
+    renderEskul();         // Render eskul di home
+    renderGaleri();        // Render galeri di home
     showSection('home');   // Tampilkan halaman Home
 
   </script>
