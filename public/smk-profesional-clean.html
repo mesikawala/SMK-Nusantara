@@ -757,6 +757,7 @@
       if (sectionId === 'admin')  { renderRegistrantsTable(); loadAdminForms(); }
       if (sectionId === 'guru')   renderGuru();
       if (sectionId === 'jurusan') renderJurusan();
+      if (sectionId === 'home')   { renderEskul(); renderGaleri(); }
 
       window.scrollTo(0, 0);
     }
@@ -774,6 +775,8 @@
       // Render data di tab tersebut
       if (tabName === 'editGuru')    renderAdminGuru();
       if (tabName === 'editJurusan') renderAdminJurusan();
+      if (tabName === 'editEskul')   renderAdminEskul();
+      if (tabName === 'editGaleri')  renderAdminGaleri();
     }
 
 
