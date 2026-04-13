@@ -690,21 +690,42 @@
       { id: 4, nama: 'Akuntansi', deskripsi: 'Keuangan, pembukuan & perpajakan.',            icon: '📊', color: 'bg-teal-500' },
     ];
 
+    const DEFAULT_ESKUL = [
+      { id: 1, nama: 'Pramuka',       deskripsi: 'Kegiatan kepanduan untuk membangun karakter dan jiwa kepemimpinan.',    icon: '⛺', jadwal: 'Sabtu, 08.00 - 11.00', pembina: 'Pak Hendra' },
+      { id: 2, nama: 'Futsal',        deskripsi: 'Latihan futsal rutin dan persiapan turnamen antar sekolah.',            icon: '⚽', jadwal: 'Rabu, 15.00 - 17.00',  pembina: 'Pak Roni' },
+      { id: 3, nama: 'Robotik',       deskripsi: 'Belajar merakit dan memprogram robot untuk kompetisi nasional.',        icon: '🤖', jadwal: 'Kamis, 15.00 - 17.00', pembina: 'Bu Siti' },
+      { id: 4, nama: 'Seni Tari',     deskripsi: 'Melestarikan tarian tradisional dan kreasi modern.',                     icon: '💃', jadwal: 'Selasa, 15.00 - 17.00', pembina: 'Bu Maya' },
+      { id: 5, nama: 'English Club',  deskripsi: 'Meningkatkan kemampuan bahasa Inggris melalui debat dan presentasi.',   icon: '🌍', jadwal: 'Senin, 15.00 - 16.30', pembina: 'Pak David' },
+      { id: 6, nama: 'PMR',           deskripsi: 'Palang Merah Remaja — pelatihan P3K dan bakti sosial.',                 icon: '🏥', jadwal: 'Jumat, 14.00 - 16.00', pembina: 'Bu Dewi' },
+    ];
+
+    const DEFAULT_GALERI = [
+      { id: 1, judul: 'Upacara Bendera',       foto: '', keterangan: 'Upacara bendera setiap Senin pagi di lapangan sekolah.' },
+      { id: 2, judul: 'Praktikum Lab Komputer', foto: '', keterangan: 'Siswa RPL dan TKJ saat praktikum di lab komputer.' },
+      { id: 3, judul: 'Lomba LKS Tingkat Kota', foto: '', keterangan: 'Tim SMK Nusantara meraih juara di LKS kota.' },
+      { id: 4, judul: 'Pentas Seni Tahunan',    foto: '', keterangan: 'Penampilan seni tari dan musik di acara pentas seni.' },
+      { id: 5, judul: 'Study Tour',             foto: '', keterangan: 'Kunjungan industri ke perusahaan teknologi.' },
+      { id: 6, judul: 'Class Meeting',           foto: '', keterangan: 'Pertandingan antar kelas di akhir semester.' },
+    ];
+
 
     // ==============================================================
     // 2. LOAD & SAVE — localStorage
     //    Data tersimpan di browser, tetap ada setelah refresh
-    //    Key: smk_guru, smk_jurusan, smk_registrants, smk_content
     // ==============================================================
 
     let guruData     = JSON.parse(localStorage.getItem('smk_guru')        || 'null') || structuredClone(DEFAULT_GURU);
     let jurusanData  = JSON.parse(localStorage.getItem('smk_jurusan')     || 'null') || structuredClone(DEFAULT_JURUSAN);
+    let eskulData    = JSON.parse(localStorage.getItem('smk_eskul')       || 'null') || structuredClone(DEFAULT_ESKUL);
+    let galeriData   = JSON.parse(localStorage.getItem('smk_galeri')      || 'null') || structuredClone(DEFAULT_GALERI);
     let registrants  = JSON.parse(localStorage.getItem('smk_registrants') || '[]');
     let siteContent  = JSON.parse(localStorage.getItem('smk_content')     || 'null') || {};
 
     function saveAllData() {
       localStorage.setItem('smk_guru',        JSON.stringify(guruData));
       localStorage.setItem('smk_jurusan',     JSON.stringify(jurusanData));
+      localStorage.setItem('smk_eskul',       JSON.stringify(eskulData));
+      localStorage.setItem('smk_galeri',      JSON.stringify(galeriData));
       localStorage.setItem('smk_registrants', JSON.stringify(registrants));
       localStorage.setItem('smk_content',     JSON.stringify(siteContent));
     }
