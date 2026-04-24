@@ -18,8 +18,7 @@ const App = () => (
       <RegistrationProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/brutal/*" element={<SchoolLayout variant="brutal" />} />
+            <Route path="*" element={<Index />} />
             <Route path="/professional/*" element={<SchoolLayout variant="professional" />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

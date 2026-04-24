@@ -10,7 +10,7 @@ const features = [
 
 const Home = () => {
   const theme = useTheme();
-  const base = theme === "brutal" ? "/brutal" : "/professional";
+  const base = theme === "professional" ? "/professional" : "/brutal";
 
   return (
     <div>
