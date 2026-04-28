@@ -7,6 +7,7 @@ import { RegistrationProvider } from "@/contexts/RegistrationContext";
 import SchoolLayout from "@/components/SchoolLayout";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import LoginPage from "./routes/login"
 
 const queryClient = new QueryClient();
 
@@ -18,6 +19,7 @@ const App = () => (
       <RegistrationProvider>
         <BrowserRouter>
           <Routes>
+            <Route path="/login" element={<LoginPage />} />
             <Route path="*" element={<Index />} />
             <Route path="/professional/*" element={<SchoolLayout variant="professional" />} />
             <Route path="*" element={<NotFound />} />

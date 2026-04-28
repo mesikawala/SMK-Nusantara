@@ -8,13 +8,14 @@ const Navbar = () => {
   const location = useLocation();
   const base = theme === "brutal" ? "/brutal" : "/professional";
   const [mobileOpen, setMobileOpen] = useState(false);
+  const isAdmin = localStorage.getItem("isAdmin") === "true"; // ← tambah ini
 
   const navLinks = [
     { to: `${base}`, label: "Home" },
     { to: `${base}/jurusan`, label: "Jurusan" },
     { to: `${base}/guru`, label: "Guru" },
     { to: `${base}/pendaftaran`, label: "Pendaftaran" },
-    { to: `${base}/admin`, label: "Admin" },
+    // ← hapus { to: `${base}/admin`, label: "Admin" } dari sini
   ];
 
   return (
@@ -38,6 +39,19 @@ const Navbar = () => {
               {link.label}
             </Link>
           ))}
+          {/* ← Tombol Admin hanya muncul kalau isAdmin */}
+          {isAdmin && (
+            <Link
+              to={`${base}/admin`}
+              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                location.pathname === `${base}/admin`
+                  ? "bg-primary text-primary-foreground"
+                  : "text-foreground hover:bg-muted"
+              } ${theme === "brutal" ? "theme-border" : ""}`}
+            >
+              ⚙ Admin
+            </Link>
+          )}
         </div>
         <div className="hidden md:block">
           <Link to="/" className="px-3 py-1.5 text-sm bg-muted text-muted-foreground rounded-lg hover:opacity-80 theme-border">
@@ -58,6 +72,14 @@ const Navbar = () => {
               {link.label}
             </Link>
           ))}
+          {isAdmin && (
+            <Link to={`${base}/admin`} onClick={() => setMobileOpen(false)}
+              className={`block px-4 py-3 rounded-lg font-medium ${
+                location.pathname === `${base}/admin` ? "bg-primary text-primary-foreground" : "text-foreground hover:bg-muted"
+              }`}>
+              ⚙ Admin
+            </Link>
+          )}
           <Link to="/" onClick={() => setMobileOpen(false)} className="block px-4 py-3 text-muted-foreground">← Pilih Versi</Link>
         </div>
       )}
